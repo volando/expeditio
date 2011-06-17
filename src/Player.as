@@ -10,15 +10,15 @@ package
 		{
 			super(X, Y);
 			loadGraphic(ImgPlayer,true);
-			maxVelocity.x = 400;			//walking speed
-			acceleration.y = 600;			//gravity
+			maxVelocity.x = 100;			//walking speed
+			acceleration.y = 300;			//gravity
 			drag.x = maxVelocity.x*8;		//deceleration (sliding to a stop)
 			
 			//tweak the bounding box for better feel
-			width = 8;
-			height = 10;
-			offset.x = 3;
-			offset.y = 3;
+			width = 32;
+			height = 30;
+			offset.x = 0;
+			offset.y = 0;
 			//solid = true;
 			
 			addAnimation("idle",[0],0,false);

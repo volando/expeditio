@@ -2,52 +2,79 @@ package
 {
 	import org.flixel.*;
 
+
+
 	public class PlayState extends FlxState
 	{
 		
-		[Embed(source="data/bg.png")] private var ImgBG:Class;
-		[Embed(source = "data/gibs.png")] private var ImgGibs:Class;
-		
-		[Embed(source = "data/map.png")] private var ImgMap1:Class;
-		[Embed(source = "data/map2.png")] private var ImgMap2:Class;
-		[Embed(source = "data/map3.png")] private var ImgMap3:Class;
-		[Embed(source = "data/map4.png")] private var ImgMap4:Class;
-		
-		
-		
-		protected var _fps:FlxText;
 		protected var _player:Player;
-		//protected var _elevator:FlxSprite;
-		//protected var _decoration:FlxSprite;
-		public var _screen:FlxTilemap; //1
-		public var _screenArray :Array;// array para pantallas
-		//public var _screen2:FlxTilemap;//2
+		protected var _blocke:Block;
+		public var _score:FlxText;
 		
 		private var screenIndex:Number = -1;
 		private var currentScreen:Screen;
 		private var ImgMapArray:Array;
 		
-		//public var exit:Exit;
-		//public var door: FlxSprite;
-
-		
-		
 		override public function create():void
 		{
 			
 			//Background
-			FlxState.bgColor = 0xffacbcd7;
+			FlxState.bgColor = 0xFFFFFFFF;
 			
-			ImgMapArray = new Array();
-			ImgMapArray.push(ImgMap1);
-			ImgMapArray.push(ImgMap2);
-			ImgMapArray.push(ImgMap3);
-			ImgMapArray.push(ImgMap4);
-			
-			
-			_player = new Player(800, 100);
+			_player = new Player(100, 100);
 			add(_player);
-			nextScreen();
+			
+			var corX:Array = new Array();// [0]
+			corX [0] = 0
+			corX [1] = 32
+			corX [2] = 64
+			corX [3] = 96
+			corX [4] = 128
+			corX [5] = 160
+			corX [6] = 192
+			corX [7] = 224
+			corX [8] = 256
+			corX [9] = 288
+
+			var corY:Array = new Array();
+			
+			corY [0] = 0
+			corY [1] = 32
+			corY [2] = 64
+			corY [3] = 96
+			corY [4] = 128
+			corY [5] = 160
+			corY [6] = 192
+			corY [7] = 224
+			
+			for each (var a in corX) 
+			{
+					var _blocke:Block = new Block(a, corY[7])
+					add(_blocke);
+				for each (var b in corY) 
+				{
+					var _blocke:Block = new Block(corX[0], corY[7])
+					add(_blocke);
+					
+					var _blocke:Block = new Block(corX[9], corY[7])
+					add(_blocke);
+					
+
+
+					
+/*				instance_create(corX[0], corY[7], oBlock)
+				instance_create(corX[9],corY[7],oBlock)
+				repeat(random (40)) instance_create(corX[choose(1,2,3,4,5,6,7,8)],corY[7],oBlock)
+				repeat(random (2)) instance_create(corX[choose(2,3,4,5,6,7,8)],corY[random(7)],oBlock)*/
+					
+				}
+			}
+			_score = new FlxText(40, 10, 300);
+			_score.setFormat(null,8,0x00000000,null,0)
+			_score.text = "coor: " + String(a) +"///" + String(b)  ;
+			add(_score);
+			
+			//nextScreen();
 			//previousScreen();
 
 		}
@@ -67,9 +94,9 @@ package
 		public function previousScreen():void
 		{
 			screenIndex = screenIndex - 1;
-			//if (screenIndex >= ImgMapArray.length)
-				//return;
-			//if (screenIndex > 0)
+			if (screenIndex >= ImgMapArray.length)
+				return;
+			if (screenIndex > 0)
 				currentScreen.kill();
 			currentScreen = new Screen(ImgMapArray[screenIndex] );
 			add(currentScreen);
@@ -78,9 +105,9 @@ package
 		
 		override public function update():void
 		{
-			//_fps.text = screenIndex +" fps";
 			super.update();
 			collide();	
+			
 			
 		if (_player.x >= screen.width)
 			{
@@ -88,9 +115,9 @@ package
 			}
 			
 		if (_player.x <= 0)
-		{
-		previousScreen();
-		}
+			{
+			previousScreen();
+			}
 		}
 		
 	}
