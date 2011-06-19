@@ -1,80 +1,18 @@
 ﻿package 
 {
 	import org.flixel.*;
-	//import flash.*;
 
-	public class Screen extends FlxTilemap
+	public class Screen extends FlxSprite
 	{
+		private var corX:Array = new Array();
+		private var corY:Array = new Array();
 		
-		//var _blocke:Block;
-		//var _blocksArray:Array;
-		[Embed(source ="data/sprBlock.png")] private var ImgBlock:Class;
-		
-		
-		
-		public function Screen()
+		public function Screen(screenIndex:Number)
 		{
-			super();
-			var blocksArray:Array = new Array();
-			blocksArray.push(new Array());
-			var level1:Array = new Array([1,1,1,1,1]);
-			var level2:Array = new Array([1,0,0,0,1]);
-			var level3:Array = new Array([1,0,0,0,1]);
-			var level4:Array = new Array([1,0,0,0,1]);
-			var level5:Array = new Array([1,1,1,1,1]);
-			blocksArray[0].push(level1, level2, level3, level4, level5);
-
-			var wall:int = 1;
-			var path:int = 0;
-
-			var tileWidth:int = 32;
-			var tileHeight:int = 32;
-			var tileSpacing:int = 1;
-
-			for (var k in blocksArray[0]) //This will make the map loop through it's 5 levels or rows, so the following code will run 5 times, once for each row.
-			{
-				for (var i in blocksArray[0][k][0]) //This will make the map loop through each column, remember this is already in the loop that goes to each row, so at this point every tile in the map will be looped through.
-				{
-					var _blocke:Block = new Block(32,0,ImgBlock)
-					
-				}
-			}
-		}
-					/*if (BlocksArray[0][k][0][i] == path)
-					{
-						square.graphics.beginFill(0x9CD55E);
-						square.graphics.drawRect(0, 0, tileWidth, tileHeight);
-						square.graphics.endFill();
-
-					}
-					else if (myMap[0][k][0][i] == wall)
-					{
-						square.graphics.beginFill(0x000000);
-						square.graphics.drawRect(0, 0, tileWidth, tileHeight);
-						square.graphics.endFill();
-					}
-					squareMC.addChild(square);
-					squareMC.x = (i * (tileWidth + tileSpacing + tileSpacing)) + tileSpacing;
-					squareMC.y = (k * (tileHeight + tileSpacing + tileSpacing)) + tileSpacing;
-					addChild(squareMC);
-					
-				}
-			}*/
-	
-	
 			
-			
-			//Basic level structure
-			//var t:FlxTilemap = new FlxTilemap();
-			//auto = FlxTilemap.ALT;
-			//loadMap(FlxTilemap.pngToCSV(ImgMap, false, 2), ImgTiles);
-			//collideIndex = 1;
-			
-
-		}
-/*		function Blockin ():void
-		{
-			corX [0] = 0
+			super(screenIndex);
+			var corX:Array = new Array();
+			corX [0] = 0//var mypoint:FlxPoint = new FlxPoint(3,4);
 			corX [1] = 32
 			corX [2] = 64
 			corX [3] = 96
@@ -85,6 +23,8 @@
 			corX [8] = 256
 			corX [9] = 288
 
+			var corY:Array = new Array();
+			
 			corY [0] = 0
 			corY [1] = 32
 			corY [2] = 64
@@ -93,9 +33,33 @@
 			corY [5] = 160
 			corY [6] = 192
 			corY [7] = 224
-		}*/
-}
-	
+			
+			
+			
+			for each (var  a:int in corX) 
+			{
+				var thisBlock:FlxSprite = new Block (a, corY [7]);//(i * 32, j * 32);
+				FlxG.state.add(thisBlock);
+				for each (var b:int in corY) 
+				{
+					var thisBlocke:FlxSprite = new Block (corX[randomMinMax(1,8)],corY[randomMinMax(4,7)]);//corX[randomMinMax(1,8)],corY[randomMinMax(0,7)
+					FlxG.state.add(thisBlocke);
+					}
+					
+				}
+			}
+			private function randomMinMax( min:Number, max:Number ):Number
+			{
+			return Math.round(min + (max - min) * Math.random());
+			}
+			
+			
+		}
+	}
+
+
+
+		
 
 
 	
