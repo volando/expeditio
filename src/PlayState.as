@@ -7,20 +7,20 @@ package
 	public class PlayState extends FlxState
 	{
 		
-		protected var _player:Player;
-		//protected var _blocke:Block;
+		protected var _player:Player
 		
 		public var _score:FlxText;
 		public var _num:FlxText;
 		
 		
-		public var currentScreen:Screen;
-		private var screenIndex:Number = 0;
-		private var ImgMapArray:Array;
+		public static var currentScreen:Screen;
+		private static var screenIndex:Number = -1;
+		private static var ImgMapArray:Array;
+		private var time:int = 60;
 		
 		override public function create():void
 		{
-			
+			super.create();
 			//Background
 			FlxState.bgColor = 0xFFFFFFFF;
 			
@@ -28,49 +28,36 @@ package
 			add(_player);
 			
 			currentScreen = new Screen(screenIndex);
-			add(currentScreen);
+			FlxG.state.add(currentScreen);
 			
 			ImgMapArray = new Array();
-			
-			
-			
-			
-/*			_score = new FlxText(40, 10, 300);
-			_score.setFormat(null,8,0x00000000,null,0)
-			_score.text = "coor: " + String(currentScreen.a) +"///" + String(currentScreen.b)  ;
-			add(_score);*/
-			
-
-			
-			//nextScreen();
-			//previousScreen();
 
 		}
 		
-		public function nextScreen():void
+		public static function nextScreen():void
 		{
-			_player.x = 20;
 			screenIndex = screenIndex + 1;
 			if (screenIndex >= ImgMapArray.length)
 				return;
 			if (screenIndex > 0)
 			currentScreen.kill();
 			currentScreen = new Screen(ImgMapArray[screenIndex]);
-			add(currentScreen);
-			
-			
+			FlxG.state.add(currentScreen);
 		}
 		
-		public function previousScreen():void
+		public static function previousScreen():void
 		{
+			
 			screenIndex = screenIndex - 1;
 			if (screenIndex >= ImgMapArray.length)
 				return;
 			if (screenIndex > 0)
 			currentScreen.kill();
 			currentScreen = new Screen(ImgMapArray[screenIndex]);
-			add(currentScreen);
-			_player.x = screen.width - 20;
+			FlxG.state.add(currentScreen);
+			
+			
+			
 		}
 		
 		function text():void
@@ -81,7 +68,6 @@ package
 			//_num.kill();
 			_num.text = "coor: " + String(screenIndex) + "|" + String(currentScreen) + "|" + String(ImgMapArray.length) ; 
 			FlxG.state.add(_num);
-			
 		}
 	
 		
@@ -90,18 +76,13 @@ package
 			super.update();
 			collide();	
 			text();
+			time--;
 			
-		if (_player.x >= FlxG.width)
-			{
-				
-			nextScreen();
-			}
-			
-		if (_player.x <= 0)
-			{
-			previousScreen();
+		if (time < 0) {
+			time = 60;	
 			}
 		}
 		
 	}
 }
+

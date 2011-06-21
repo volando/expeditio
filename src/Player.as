@@ -31,11 +31,23 @@ package
 		override public function update():void
 		{
 			//Smooth slidey walking controls
-			acceleration.x = 0;
+			acceleration.x = 10;
 			if(FlxG.keys.LEFT)
 				acceleration.x -= drag.x;
 			if(FlxG.keys.RIGHT)
 				acceleration.x += drag.x;
+				
+			if (x >= FlxG.width)
+			{
+			//nextScreen();
+			x = 2
+			}
+			
+			if (x <= 0)
+			{
+			x = FlxG.width - 2;
+			PlayState.previousScreen();
+			}
 			
 			if(onFloor)
 			{
@@ -44,18 +56,8 @@ package
 				{
 					velocity.y = -acceleration.y*0.51;
 					play("jump");
-				}//Animations
-				else if(velocity.x > 0)
-					play("walk");
-				else if(velocity.x < 0)
-					play("walk_back");
-				else
-					play("idle");
+				}
 			}
-			else if(velocity.y < 0)
-				play("jump");
-			else
-				play("flail");
 			
 			//Default object physics update
 			super.update();
